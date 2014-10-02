@@ -198,9 +198,7 @@ public class RadialSelectorView extends View {
             return -1;
         }
 
-        double hypotenuse = Math.sqrt(
-                (pointY - mYCenter)*(pointY - mYCenter) +
-                (pointX - mXCenter)*(pointX - mXCenter));
+        double hypotenuse = Math.hypot(pointY - mYCenter, pointX - mXCenter);
         // Check if we're outside the range
         if (mHasInnerCircle) {
             if (forceLegal) {

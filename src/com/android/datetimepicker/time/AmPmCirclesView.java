@@ -129,16 +129,12 @@ public class AmPmCirclesView extends View {
             return -1;
         }
 
-        int squaredYDistance = (int) ((yCoord - mAmPmYCenter)*(yCoord - mAmPmYCenter));
-
-        int distanceToAmCenter =
-                (int) Math.sqrt((xCoord - mAmXCenter)*(xCoord - mAmXCenter) + squaredYDistance);
+        int distanceToAmCenter = (int) Math.hypot(xCoord - mAmXCenter, yCoord - mAmPmYCenter);
         if (distanceToAmCenter <= mAmPmCircleRadius) {
             return AM;
         }
 
-        int distanceToPmCenter =
-                (int) Math.sqrt((xCoord - mPmXCenter)*(xCoord - mPmXCenter) + squaredYDistance);
+        int distanceToPmCenter = (int) Math.hypot(xCoord - mPmXCenter, yCoord - mAmPmYCenter);
         if (distanceToPmCenter <= mAmPmCircleRadius) {
             return PM;
         }
