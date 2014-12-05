@@ -367,6 +367,21 @@ public abstract class DayPickerView extends ListView implements OnScrollListener
 
     @Override
     public void onDateChanged() {
+        boolean animate = false;
+
+        // Validate dates
+        CalendarDay selectedDate = mController.getSelectedDay();
+        Calendar minDate = mController.getMinDate();
+        Calendar maxDate = mController.getMaxDate();
+        if (selectedDateIsBeforeMinDate(selectedDate, minDate)) {
+            mController.onDayOfMonthSelected(minDate.get(Calendar.YEAR), minDate.get(Calendar.MONTH), minDate.get(Calendar.DAY_OF_MONTH));
+            animate = true;
+        }
+        else if (selectedDateIsAfterMaxDate(selectedDate, maxDate)) {
+            mController.onDayOfMonthSelected(maxDate.get(Calendar.YEAR), maxDate.get(Calendar.MONTH), maxDate.get(Calendar.DAY_OF_MONTH));
+            animate = true;
+        }
+
         goTo(mController.getSelectedDay(), false, true, true);
     }
 

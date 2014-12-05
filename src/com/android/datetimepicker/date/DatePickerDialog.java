@@ -368,8 +368,8 @@ public class DatePickerDialog extends DialogFragment implements
     }
 
     public void setYearRange(int startYear, int endYear) {
-        if (endYear <= startYear) {
-            throw new IllegalArgumentException("Year end must be larger than year start");
+        if (endYear < startYear) {
+            throw new IllegalArgumentException("Year end must be larger than or equal to year start");
         }
         mMinYear = startYear;
         mMaxYear = endYear;
@@ -385,6 +385,13 @@ public class DatePickerDialog extends DialogFragment implements
      */
     public void setMinDate(Calendar calendar) {
         mMinDate = calendar;
+
+        if (mCalendar.before(mMinDate)) {
+            Log.d(TAG, "setMaxDate: Selection before min limit. Adjusting selection.");
+            mCalendar.set(Calendar.YEAR, mMinDate.get(Calendar.YEAR));
+            mCalendar.set(Calendar.MONTH, mMinDate.get(Calendar.MONTH));
+            mCalendar.set(Calendar.DAY_OF_MONTH, mMinDate.get(Calendar.DAY_OF_MONTH));
+        }
 
         if (mDayPickerView != null) {
             mDayPickerView.onChange();
@@ -406,6 +413,13 @@ public class DatePickerDialog extends DialogFragment implements
      */
     public void setMaxDate(Calendar calendar) {
         mMaxDate = calendar;
+
+        if (mCalendar.after(mMaxDate)) {
+            Log.d(TAG, "setMaxDate: Selection after max limit. Adjusting selection.");
+            mCalendar.set(Calendar.YEAR, mMaxDate.get(Calendar.YEAR));
+            mCalendar.set(Calendar.MONTH, mMaxDate.get(Calendar.MONTH));
+            mCalendar.set(Calendar.DAY_OF_MONTH, mMaxDate.get(Calendar.DAY_OF_MONTH));
+        }
 
         if (mDayPickerView != null) {
             mDayPickerView.onChange();
