@@ -74,7 +74,10 @@ public class Utils {
             case Calendar.NOVEMBER:
                 return 30;
             case Calendar.FEBRUARY:
-                return (year % 4 == 0) ? 29 : 28;
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.MONTH, month);
+                return c.getActualMaximum(Calendar.DAY_OF_MONTH);
             default:
                 throw new IllegalArgumentException("Invalid Month");
         }
